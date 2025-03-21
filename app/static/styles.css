@@ -1,0 +1,404 @@
+/* Reset some default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9 ;
+    font-family: "Trade Gothic", sans-serif;
+}
+
+/* Basic styles for the navigation bar */
+
+.central-block {
+    margin: 10px;
+}
+
+.navbar {
+    background-color: #3E3F5B;
+    color: #FFF;
+    padding: 5px 10px; /* Adjusted padding to make the navbar more compact */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 16px; /* Adjusted the font size to make it more readable */
+    padding-left: 10px;
+    font-family: "Trade Gothic", sans-serif;
+}
+
+.navbar-brand-text {
+    font-weight: bold;
+}
+
+.navbar-links {
+    list-style-type: none;
+    display: flex;
+    padding-right: 10px;
+}
+
+.navbar-links li {
+    margin-left: 10px; /* Adjusted margin to make the links closer together */
+}
+
+.navbar-links li a {
+    color: #FFF;
+    text-decoration: none;
+    font-size: 14px; /* Adjusted the font size to make the links smaller */
+    font-family: "Trade Gothic", sans-serif;
+}
+
+.navbar-links li a:hover {
+    text-decoration: underline;
+}
+
+.scenario_complete {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+}
+
+/* Styles for the login form */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%; /* Adjusted width to make it bigger */
+    height: 90vh; /* Set the height to 50% of the viewport height */
+    max-width: 700px; /* Set a maximum width to limit the container size */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Trade Gothic", sans-serif;
+}
+
+.login-form {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0.0, 0.0, 0.0, 0.1);
+    width: 100%;
+}
+
+.login-form h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #3E3F5B;
+}
+
+.login-form div {
+    margin-bottom: 10px;
+}
+
+.login-form label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #3E3F5B;
+}
+
+.login-form input[type="text"] {
+    width: 95%;
+    margin-right: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-family: "Trade Gothic", sans-serif;
+}
+
+
+.login-form input {
+    width: 95%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    outline: 1px solid #3E3F5B;
+}
+
+
+
+.login-form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: white;
+    background-color: #3E3F5B;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    background-color: #007FA3;
+}
+
+
+
+.table-container {
+    margin-top: 10px; /* Add spacing around the table */
+    margin-left: 25px;
+    position: relative;
+    font-family: "Trade Gothic", "Bembo";
+}
+
+.table-container p{
+    font-size: 20px;
+    font-weight: bold; 
+}
+
+.page-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-title h2{
+    font-family: "Trade Gothic", "Bembo";    
+}
+
+.run_scenarios  input[name="scenario_name"]{
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    
+}
+
+.run_scenarios  select[name="adm_round"]{
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    text-align: center;
+}
+
+
+.page-title button[type="submit"] {
+    width: 10%; 
+    padding: 12px;
+    font-size: 16px;
+    color: white;
+    background-color: #3E3F5B;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.run_scenarios button:hover {
+    background-color: #007FA3;
+}
+
+.header {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space items apart */
+    align-items: center; /* Vertically center items */
+    background-color: white; /* Background color for header */
+    padding: 10px; /* Padding for header */
+}
+
+.cutoffs-table {
+    margin-left: auto; 
+    margin-right: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    
+    overflow: hidden;
+    border: 1px solid #ccc;
+    width: 75%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    /* border-radius: 10px; */
+    overflow: hidden;
+    /*table-layout: fixed;  Ensures equal column width */
+}
+
+th, td {
+    border: 1px solid #ccc;
+}
+
+th {
+    background-color: #3E3F5B;
+    color: #e0e0e0;
+    text-align: left;
+    padding: 5px; 
+}
+
+
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    width: 7%;  /*Adjust the width as needed to evenly space the cells */
+    white-space: normal;
+}
+
+td input[type="number"] {
+    width: 100%; /* Make input boxes expand to fill the available width */
+    box-sizing: border-box; /* Include padding and border in the width */
+    text-align: center; /* Center-align the text within the input box */
+    font-size: 16px; /* Adjust the font size as needed */
+    padding: 2px; /* Adjust the padding as needed for spacing */
+}
+
+td select {
+    width: 100%; /* Make input boxes expand to fill the available width */
+    box-sizing: border-box; /* Include padding and border in the width */
+    text-align: center; /* Center-align the text within the input box */
+    font-size: 14px; /* Adjust the font size as needed */
+    padding: 2px; /* Adjust the padding as needed for spacing */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover{
+    background-color: #e0e0e0;
+}
+
+
+.scenario-parameters {
+    margin-bottom: 20px;
+    width: 100%;
+    /* display: flex;     */
+    /* flex-direction: column; */
+}
+
+
+.parameter-card {
+    background: rgba(255, 255, 255, 0.2);
+    /* width: calc(33.33% - 50px); */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    border-color: gray;
+    padding: 10px;
+    margin: 20px;
+    display: flex;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    /* align-content: space-between; */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    font-family: 'Trade Gothic';
+}
+
+.parameter-group {
+    margin-left: 10px;
+    margin-right: 10px;    
+    /* border: 1px solid #ccc;
+    border-color: gray; */
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    padding: 10px;
+    /* width: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+}
+.parameter-group label {
+    margin-right: 10px;
+}
+
+/* .parameter-group:nth-child(2),
+.parameter-group:nth-child(3) {
+    flex: 0 0 25%;
+    padding: 10px;
+} */
+
+.parameter-group label {
+    font-weight: bolder;
+    font-size: larger;
+}
+
+
+
+.filter-card {
+    background: rgba(255, 255, 255, 0.2);
+    /* width: calc(33.33% - 50px); */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    border-color: gray;
+    padding: 10px;
+    margin: 20px;
+    display: block;
+    /* vertical-align: top; */
+    /* flex: 1; */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    font-family: 'Trade Gothic';
+}
+
+.alt-offer-container {
+    display: inline-block; 
+    width: 49.7%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+
+.filter-card h2 {
+    margin-top: 0;
+}
+
+.filter-card label {
+    font-size: medium;
+}
+
+
+
+
+.filter-group {
+    margin-left: 10px;
+    margin-right: 10px;
+    display: inline-block;
+    width: 20%;
+    text-align: justify;
+}
+
+.category-filter {
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: justify;
+}
+
+
+
+.page-title {
+    margin: 15px;
+    font-family: "Trade Gothic", sans-serif;
+}
+/* 
+.cutoff-form {
+    background-color: blue; 
+    color: white; 
+    border: none; 
+    border-radius: 10px; 
+    padding: 10px 20px; 
+    cursor: pointer; /
+} */
+
+.custom-button:hover {
+    background-color: skyblue; /* Sky blue background color on hover */
+}
