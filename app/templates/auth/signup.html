@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block links %} {{super()}} {% endblock %}
+
+{% block content %}
+
+<div class="login-container">
+<form method='POST' class="login-form">
+    <h1>Create an Account</h1>
+    <div>
+        <label for='email'>Email:</label>
+        <input type='text' name="username" placeholder="Email"/>
+    </div>
+    
+    <div>
+        <label for='password'>Password:</label>
+        <input type='password' name="password" placeholder="Password"/>
+    </div>
+
+    <div>
+        <label for='password2'>Reconfirm Password:</label>
+        <input type='password' name="password" placeholder="Retype Password"/>
+    </div>
+    
+    <button type="submit">Sign Up</button>
+</form>
+</div>
+{% endblock %}
