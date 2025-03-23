@@ -74,6 +74,43 @@ body, html {
     font-family: "Trade Gothic", sans-serif;
 }
 
+.login-box {
+    display: flex;
+    background-color: #FFF;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    overflow: hidden;
+}
+/* Sidebar styling */
+.login-sidebar {
+    width: 40%;
+    background-color: #3E3F5B;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.login-sidebar p {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.signup-link {
+    color: #FFD700; /* Gold color */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
 .login-form {
     background-color: #FFF;
     padding: 20px;
@@ -141,8 +178,6 @@ body, html {
 .login-form button:hover {
     background-color: #007FA3;
 }
-
-
 
 .table-container {
     margin-top: 10px; /* Add spacing around the table */
