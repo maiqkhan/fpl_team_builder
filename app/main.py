@@ -2,8 +2,11 @@ from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
-from . import config, shortcuts
+from . import config, shortcuts, models, database
 from .routers.auth import users
+
+
+models.Base.metadata.create_all(bind=database.engine)
 
 settings = config.get_settings()
 
