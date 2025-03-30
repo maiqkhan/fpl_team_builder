@@ -6,7 +6,7 @@ from . import config, shortcuts, models, database
 from .routers.auth import users
 
 
-models.Base.metadata.create_all(bind=database.engine)
+# models.Base.metadata.create_all(bind=database.engine)
 
 settings = config.get_settings()
 
