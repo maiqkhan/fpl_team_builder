@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel import Session, select
 
-from ... import shortcuts, config, database, models
+from ... import shortcuts, config, database, models, auth
 
 settings = config.get_settings()
 
@@ -43,20 +43,22 @@ def register_user(
     user_credentials: OAuth2PasswordSignupForm = Depends(),
 ):
 
-    signup_email = user_credentials.username
-    password = user_credentials.password
-    reconfirmPassword = user_credentials.reconfirmPassword
-
     user_account = models.UserSignup(
-        email=signup_email, password=password, password_confirm=reconfirmPassword
+        email=user_credentials.username,
+        password=user_credentials.password,
+        password_confirm=user_credentials.reconfirmPassword,
     )
 
     if session.exec(
-        select(models.User).where(models.User.email == signup_email)
+        select(models.User).where(models.User.email == user_account.email)
     ).first():
-        raise ValueError(f"{signup_email} is not available. Please pick another email.")
+        raise ValueError(
+            f"{user_account.email} is not available. Please pick another email."
+        )
 
-    user = models.User(email=signup_email, password=password)
+    password_hash = auth.get_password_hash(user_account.password.get_secret_value())
+
+    user = models.User(email=user_account.email, password=password_hash)
 
     session.add(user)
     session.commit()
@@ -65,3 +67,4 @@ def register_user(
     # Check that email matches pattern of an email  DONE
     # Check that password and reconfirm password matches DONE
     # Check that password is strong - meets certain requirements DONE
+    # Hash password
