@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import Request, APIRouter, Depends, Form
+from fastapi import Request, APIRouter, Depends, Form, HTTPException, status
 from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel import Session, select
@@ -28,6 +28,32 @@ class OAuth2PasswordSignupForm(OAuth2PasswordRequestForm):
 def login_page(request: Request):
 
     return shortcuts.render(request, "/auth/login.html", status_code=200)
+
+
+@router.post("/login", response_class=HTMLResponse)
+def login_user(
+    request: Request,
+    session: SessionDep,
+    user_credentials: OAuth2PasswordRequestForm = Depends(),
+):
+
+    user_account = session.exec(
+        select(models.User).where(models.User.email == user_credentials.username)
+    ).first()
+
+    if not user_account:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Account doesn't exist. Please try logging in again.",
+        )
+
+    if not auth.verify_password(user_credentials.password, user_account.password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Invalid email or password. Please try logging in again.",
+        )
+
+    return shortcuts.render(request, "/auth/signup.html", {}, status_code=200)
 
 
 @router.get("/signup", response_class=HTMLResponse)
@@ -67,4 +93,4 @@ def register_user(
     # Check that email matches pattern of an email  DONE
     # Check that password and reconfirm password matches DONE
     # Check that password is strong - meets certain requirements DONE
-    # Hash password
+    # Hash password DONE
