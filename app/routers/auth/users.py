@@ -47,7 +47,9 @@ def login_user(
             detail=f"Account doesn't exist. Please try logging in again.",
         )
 
-    if not auth.verify_password(user_credentials.password, user_account.password):
+    if not models.User.verify_password(
+        user_credentials.password, user_account.password
+    ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid email or password. Please try logging in again.",
@@ -78,8 +80,10 @@ def register_user(
     if session.exec(
         select(models.User).where(models.User.email == user_account.email)
     ).first():
-        raise ValueError(
-            f"{user_account.email} is not available. Please pick another email."
+
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"{user_account.email} is not available. Please pick another email.",
         )
 
     password_hash = auth.get_password_hash(user_account.password.get_secret_value())

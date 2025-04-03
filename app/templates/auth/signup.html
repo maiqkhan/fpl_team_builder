@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="login-container">
-<form method='POST' class="login-form">
+<form method='POST' class="login-form" id="loginForm">
     <h1>Create an Account</h1>
     <div>
         <label for='email'>Email:</label>
@@ -24,5 +24,47 @@
     
     <button type="submit">Sign Up</button>
 </form>
+<div id="errorPopup" class="popup">
+    <div class="popup-content">
+        <p id="errorMessage"></p>
+        <button onclick="closePopup()">OK</button>
+    </div>
 </div>
+</div>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+    event.preventDefault();  // Prevent default form submission (page reload)
+
+    let formData = new FormData(this);  // Capture form data
+
+    try {
+        let response = await fetch("/signup", {
+            method: "POST",
+            body: formData
+        });
+
+        if (response.ok) {
+            // ✅ SUCCESS: Redirect to dashboard or another page
+            window.location.href = "/";
+        } else {
+            // ❌ ERROR: Show pop-up with error message
+            let data = await response.json();
+            showPopup(data.detail);
+        }
+    } catch (error) {
+        // ❌ Network/Server Issue: Generic error message
+        showPopup("Something went wrong. Please try again.");
+    }
+    });
+
+    function showPopup(message) {
+        document.getElementById("errorMessage").innerText = message;
+        document.getElementById("errorPopup").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("errorPopup").style.display = "none";
+    }
+</script>
 {% endblock %}

@@ -47,3 +47,7 @@ class User(SQLModel, table=True):
     )
     email: EmailStr = Field(max_length=100)
     password: str = Field(max_length=100)
+
+    @staticmethod
+    def verify_password(plain_password: str, hashed_password: str) -> bool:
+        return pwd_context.verify(plain_password, hashed_password)
