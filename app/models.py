@@ -51,3 +51,8 @@ class User(SQLModel, table=True):
     @staticmethod
     def get_password_hash(password):
         return pwd_context.hash(password)
+
+
+class JWTtoken(BaseModel):
+    access_token: str
+    token_type: str
