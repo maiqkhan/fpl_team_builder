@@ -2,6 +2,7 @@ from typing import Annotated
 from fastapi import Request, APIRouter, Depends, Form, HTTPException, status
 from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import ValidationError
 from sqlmodel import Session, select
 
 from ... import shortcuts, config, database, models, auth
@@ -44,7 +45,7 @@ def login_user(
     if not user_account:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Account doesn't exist. Please try logging in again.",
+            detail="Account doesn't exist. Please try logging in again.",
         )
 
     if not models.User.verify_password(
@@ -52,7 +53,7 @@ def login_user(
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Invalid email or password. Please try logging in again.",
+            detail="Invalid email or password. Please try logging in again.",
         )
 
     return shortcuts.render(request, "/auth/signup.html", {}, status_code=200)
@@ -71,11 +72,17 @@ def register_user(
     user_credentials: OAuth2PasswordSignupForm = Depends(),
 ):
 
-    user_account = models.UserSignup(
-        email=user_credentials.username,
-        password=user_credentials.password,
-        password_confirm=user_credentials.reconfirmPassword,
-    )
+    try:
+        user_account = models.UserSignup(
+            email=user_credentials.username,
+            password=user_credentials.password,
+            password_confirm=user_credentials.reconfirmPassword,
+        )
+    except ValidationError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"{e.errors()[0]['ctx']['error']}.",
+        ) from e
 
     if session.exec(
         select(models.User).where(models.User.email == user_account.email)
@@ -86,15 +93,17 @@ def register_user(
             detail=f"{user_account.email} is not available. Please pick another email.",
         )
 
-    password_hash = auth.get_password_hash(user_account.password.get_secret_value())
+    password_hash = models.User.get_password_hash(
+        user_account.password.get_secret_value()
+    )
 
-    user = models.User(email=user_account.email, password=password_hash)
+    try:
+        user = models.User(email=user_account.email, password=password_hash)
 
-    session.add(user)
-    session.commit()
-
-    # Check that email doesn't exist in users table DONE
-    # Check that email matches pattern of an email  DONE
-    # Check that password and reconfirm password matches DONE
-    # Check that password is strong - meets certain requirements DONE
-    # Hash password DONE
+        session.add(user)
+        session.commit()
+    except ValidationError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"{e.errors()[0]['ctx']['error']}.",
+        ) from e
