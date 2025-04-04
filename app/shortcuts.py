@@ -1,4 +1,4 @@
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from . import config
@@ -30,5 +30,17 @@ def render(
     if len(cookies.keys()) > 0:
         for k, v in cookies.items():
             response.set_cookie(key=k, value=v, httponly=True)
+
+    return response
+
+
+def redirect(path, cookies: dict = {}, remove_session=False):
+    response = RedirectResponse(path, status_code=302)
+
+    for key, val in cookies.items():
+        response.set_cookie(key=key, value=val, httponly=True)
+
+    if remove_session:
+        response.delete_cookie("session_id")
 
     return response
