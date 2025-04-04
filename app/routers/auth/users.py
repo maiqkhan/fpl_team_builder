@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import ValidationError
 from sqlmodel import Session, select
 
-from ... import shortcuts, config, database, models, auth
+from ... import shortcuts, config, database, models, oauth2
 
 settings = config.get_settings()
 
@@ -56,7 +56,11 @@ def login_user(
             detail="Invalid email or password. Please try logging in again.",
         )
 
-    return shortcuts.render(request, "/auth/signup.html", {}, status_code=200)
+    access_token = oauth2.create_access_token(
+        data={"user_id": user_account.user_id}, expires_delta=settings.token_expire
+    )
+
+    return shortcuts.redirect("/", cookies={"session_id": access_token})
 
 
 @router.get("/signup", response_class=HTMLResponse)
@@ -107,3 +111,13 @@ def register_user(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"{e.errors()[0]['ctx']['error']}.",
         ) from e
+
+    user_account = session.exec(
+        select(models.User).where(models.User.email == user_account.email)
+    ).first()
+
+    access_token = oauth2.create_access_token(
+        data={"user_id": user_account.user_id}, expires_delta=settings.token_expire
+    )
+
+    return shortcuts.redirect("/", cookies={"session_id": access_token})
