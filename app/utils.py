@@ -30,6 +30,10 @@ INCLUDES_LOWERCASE: bool = True
 INCLUDES_UPPERCASE: bool = True
 
 
+class PasswordStrength(ValueError):
+    message: str
+
+
 def validate_password(v: SecretStr) -> SecretStr:
     min_length = MIN_LENGTH
     max_length = MAX_LENGTH
@@ -42,23 +46,23 @@ def validate_password(v: SecretStr) -> SecretStr:
     if not isinstance(v.get_secret_value(), str):
         raise TypeError("string required")
     if len(v.get_secret_value()) < min_length or len(v.get_secret_value()) > max_length:
-        raise ValueError(
-            f"length should be at least {min_length} but not more than {max_length}"
+        raise PasswordStrength(
+            f"Password length should be at least {min_length} characters but not more than {max_length} characters"
         )
 
     if includes_numbers and not any(char.isdigit() for char in v.get_secret_value()):
-        raise ValueError("Password should have at least one numeral")
+        raise PasswordStrength("Password should have at least one numeral")
 
     if includes_uppercase and not any(char.isupper() for char in v.get_secret_value()):
-        raise ValueError("Password should have at least one uppercase letter")
+        raise PasswordStrength("Password should have at least one uppercase letter")
 
     if includes_lowercase and not any(char.islower() for char in v.get_secret_value()):
-        raise ValueError("Password should have at least one lowercase letter")
+        raise PasswordStrength("Password should have at least one lowercase letter")
 
     if includes_special_chars and not any(
         char in special_chars for char in v.get_secret_value()
     ):
-        raise ValueError(
+        raise PasswordStrength(
             f"Password should have at least one of the special symbols: {special_chars}"
         )
 
