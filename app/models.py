@@ -17,10 +17,6 @@ from typing_extensions import Self
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-def get_password_hash(password):
-    return pwd_context.hash(password)
-
-
 ValidatePassword = Annotated[SecretStr, AfterValidator(validate_password)]
 
 
@@ -51,3 +47,7 @@ class User(SQLModel, table=True):
     @staticmethod
     def verify_password(plain_password: str, hashed_password: str) -> bool:
         return pwd_context.verify(plain_password, hashed_password)
+
+    @staticmethod
+    def get_password_hash(password):
+        return pwd_context.hash(password)
