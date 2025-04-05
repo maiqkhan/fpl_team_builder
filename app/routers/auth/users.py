@@ -25,7 +25,7 @@ class OAuth2PasswordSignupForm(OAuth2PasswordRequestForm):
         self.reconfirmPassword = reconfirmPassword
 
 
-@router.get("/login", response_class=HTMLResponse)
+@router.get("/login", response_class=HTMLResponse, name="login")
 def login_page(request: Request):
 
     return shortcuts.render(request, "/auth/login.html", status_code=200)
@@ -121,3 +121,9 @@ def register_user(
     )
 
     return shortcuts.redirect("/", cookies={"session_id": access_token})
+
+
+@router.get("/logout", response_class=HTMLResponse)
+def logout_page(request: Request):
+
+    return shortcuts.redirect("/", cookies={}, remove_session=True)
