@@ -2,12 +2,12 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 
-client = TestClient(app)
+base_client = TestClient(app)
 
 
 def test_get_login_route():
     """Test GET request to login route with no cookies"""
-    response = client.get("/login")
+    response = base_client.get("/login")
     print(response.url)
     assert response.status_code == 200
     assert response.cookies == {}
@@ -23,7 +23,7 @@ def test_get_login_route_with_session_cookie():
 
 def test_get_signup_route():
     """Test GET request to signup route"""
-    response = client.get("/signup")
+    response = base_client.get("/signup")
     assert response.status_code == 200
     assert response.cookies == {}
 
