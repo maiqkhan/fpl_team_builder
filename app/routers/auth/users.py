@@ -28,7 +28,10 @@ class OAuth2PasswordSignupForm(OAuth2PasswordRequestForm):
 @router.get("/login", response_class=HTMLResponse, name="login")
 def login_page(request: Request):
 
-    return shortcuts.render(request, "/auth/login.html", status_code=200)
+    if "session_id" in request.cookies:
+        return shortcuts.redirect("/", cookies=request.cookies)
+    else:
+        return shortcuts.render(request, "/auth/login.html", status_code=200)
 
 
 @router.post("/login", response_class=HTMLResponse)
@@ -66,7 +69,10 @@ def login_user(
 @router.get("/signup", response_class=HTMLResponse)
 def signin_page(request: Request):
 
-    return shortcuts.render(request, "/auth/signup.html", status_code=200)
+    if "session_id" in request.cookies:
+        return shortcuts.redirect("/", cookies=request.cookies)
+    else:
+        return shortcuts.render(request, "/auth/signup.html", status_code=200)
 
 
 @router.post("/signup", response_class=HTMLResponse)
