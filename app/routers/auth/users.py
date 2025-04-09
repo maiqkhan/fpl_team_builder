@@ -91,7 +91,7 @@ def register_user(
     except ValidationError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"{e.errors()[0]['ctx']['error']}.",
+            detail=f"{e.errors()[0]['msg']}",
         ) from e
 
     if session.exec(
