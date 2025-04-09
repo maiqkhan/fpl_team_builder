@@ -62,8 +62,6 @@ def validate_password(v: SecretStr) -> SecretStr:
     if includes_special_chars and not any(
         char in special_chars for char in v.get_secret_value()
     ):
-        raise PasswordStrength(
-            f"Password should have at least one of the special symbols: {special_chars}"
-        )
+        raise PasswordStrength(f"Password should have at least one special character")
 
     return v
