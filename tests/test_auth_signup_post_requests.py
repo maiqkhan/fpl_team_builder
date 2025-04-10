@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine
 from sqlmodel.pool import StaticPool
 from app.main import app
+from app.models import User
 import json
 from app.database import get_session
 import pytest
@@ -180,4 +181,32 @@ def test_signup_password_no_special_char_post_request(client: TestClient):
     assert (
         response_dict["detail"]
         == "Value error, Password should have at least one special character"
+    )
+
+
+## add one for where email already exists
+def test_signup_password_taken_email_request(session: Session, client: TestClient):
+    """Test Failed POST Request to signup page due to email already taken."""
+    account_email = "test@gmail.com"
+    hashed_password = User.get_password_hash(password="Test123!")
+    user_account = User(email=account_email, password=hashed_password)
+    session.add(user_account)
+    session.commit()
+
+    response = client.post(
+        "/signup",
+        data={
+            "username": account_email,
+            "password": "Test123!",
+            "reconfirmPassword": "Test123!",
+        },
+        follow_redirects=False,
+    )
+
+    response_dict = response.json()
+
+    assert response.status_code == 401
+    assert (
+        response_dict["detail"]
+        == f"{account_email} is not available. Please pick another email."
     )
