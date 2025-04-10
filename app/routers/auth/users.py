@@ -48,7 +48,7 @@ def login_user(
     if not user_account:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Account doesn't exist. Please try logging in again.",
+            detail="Invalid email or password. Please try logging in again.",
         )
 
     if not models.User.verify_password(
