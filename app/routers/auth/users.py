@@ -25,10 +25,13 @@ class OAuth2PasswordSignupForm(OAuth2PasswordRequestForm):
         self.reconfirmPassword = reconfirmPassword
 
 
-@router.get("/login", response_class=HTMLResponse)
+@router.get("/login", response_class=HTMLResponse, name="login")
 def login_page(request: Request):
 
-    return shortcuts.render(request, "/auth/login.html", status_code=200)
+    if "session_id" in request.cookies:
+        return shortcuts.redirect("/", cookies=request.cookies)
+    else:
+        return shortcuts.render(request, "/auth/login.html", status_code=200)
 
 
 @router.post("/login", response_class=HTMLResponse)
@@ -45,7 +48,7 @@ def login_user(
     if not user_account:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Account doesn't exist. Please try logging in again.",
+            detail="Invalid email or password. Please try logging in again.",
         )
 
     if not models.User.verify_password(
@@ -66,7 +69,10 @@ def login_user(
 @router.get("/signup", response_class=HTMLResponse)
 def signin_page(request: Request):
 
-    return shortcuts.render(request, "/auth/signup.html", status_code=200)
+    if "session_id" in request.cookies:
+        return shortcuts.redirect("/", cookies=request.cookies)
+    else:
+        return shortcuts.render(request, "/auth/signup.html", status_code=200)
 
 
 @router.post("/signup", response_class=HTMLResponse)
@@ -85,7 +91,7 @@ def register_user(
     except ValidationError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"{e.errors()[0]['ctx']['error']}.",
+            detail=f"{e.errors()[0]['msg']}",
         ) from e
 
     if session.exec(
@@ -121,3 +127,9 @@ def register_user(
     )
 
     return shortcuts.redirect("/", cookies={"session_id": access_token})
+
+
+@router.get("/logout", response_class=HTMLResponse)
+def logout_page(request: Request):
+
+    return shortcuts.redirect("/", cookies={}, remove_session=True)
