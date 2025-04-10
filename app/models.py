@@ -1,8 +1,6 @@
 from .utils import validate_password
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column
 from passlib.context import CryptContext
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from sqlmodel import Field, SQLModel
 from pydantic import (
     BaseModel,
     EmailStr,
@@ -12,7 +10,6 @@ from pydantic import (
     AfterValidator,
 )
 from typing import Optional, Annotated
-from typing_extensions import Self
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -35,7 +32,7 @@ class UserSignup(BaseModel):
 
 class User(SQLModel, table=True):
     __tablename__ = "USERS"
-    __table_args__ = {"schema": "auth"}
+    # __table_args__ = {"schema": "auth"}
 
     user_id: Optional[int] = Field(
         default=None,
