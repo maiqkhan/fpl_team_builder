@@ -2,14 +2,125 @@
 
 {% block links %} 
     <li><a href="/">Home</a></li>
+    <li><a href="/build_team">Build Team</a></li>
+    <li><a href="/analytics">Analytics</a></li>
+    <li><a href="/fixtures">Fixtures</a></li>
     <li><a href="logout">Logout</a></li>
 {% endblock %}
 
 {% block content %}
 
-<div class="table-container">
-    <h1>Welcome to the FPL Team Build Tool</h1>
-
-    <p>You are now logged in.</p>
+<div class="container">
+    <div class="dashboard-header">
+        <div class="welcome-text">
+            <h2>Welcome to the FPL Team Build Tool</h2>
+            <p>Gameweek 12 is approaching. Make sure your team is ready.</p>
+        </div>
+        <div class="action-buttons">
+            <a href="/build_team" class="btn btn-primary">Build Your Team</a>
+            <a href="/analytics" class="btn btn-secondary">View Analytics</a>
+        </div>
+    </div>
+    
+    <div class="deadline-timer">
+        <div class="timer-info">
+            <h3>Gameweek 12 Deadline</h3>
+            <p>Make your transfers and set your team before the deadline</p>
+        </div>
+        <div>
+            <p class="timer-value">46:23:15</p>
+            <p class="timer-label">Hours : Minutes : Seconds</p>
+        </div>
+    </div>
+    
+    <div class="dashboard-grid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Your Team Overview</h3>
+                <a href="/build_team" class="card-link">Manage Team</a>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <p class="stat-value">82</p>
+                    <p class="stat-label">Last GW Points</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-value">754</p>
+                    <p class="stat-label">Total Points</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-value">£2.5M</p>
+                    <p class="stat-label">In The Bank</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-value">1</p>
+                    <p class="stat-label">Free Transfers</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Top Performers</h3>
+                <a href="/analytics" class="card-link">View All</a>
+            </div>
+            <div class="player-list">
+                <div class="player-item">
+                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p223094.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
+                    <div class="player-info">
+                        <p class="player-name">Erling Haaland</p>
+                        <p class="player-team">MCI</p>
+                    </div>
+                    <span class="player-points">15 pts</span>
+                </div>
+                <div class="player-item">
+                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p118748.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
+                    <div class="player-info">
+                        <p class="player-name">Mohamed Salah</p>
+                        <p class="player-team">LIV</p>
+                    </div>
+                    <span class="player-points">12 pts</span>
+                </div>
+                <div class="player-item">
+                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p232787.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
+                    <div class="player-info">
+                        <p class="player-name">Cole Palmer</p>
+                        <p class="player-team">CHE</p>
+                    </div>
+                    <span class="player-points">9 pts</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">FPL News & Updates</h3>
+                <a href="#" class="card-link">More News</a>
+            </div>
+            <div class="news-list">
+                <div class="news-item">
+                    <img src="{{ url_for('static', path='news-icon.png') }}" alt="News" width="40" height="40" onerror="this.src='/static/placeholder.png'">
+                    <div>
+                        <p class="news-date">Today</p>
+                        <p class="news-title">Injury update: Kane doubtful for next match</p>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <img src="{{ url_for('static', path='news-icon.png') }}" alt="News" width="40" height="40" onerror="this.src='/static/placeholder.png'">
+                    <div>
+                        <p class="news-date">Yesterday</p>
+                        <p class="news-title">Top captain picks for Gameweek 12</p>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <img src="{{ url_for('static', path='news-icon.png') }}" alt="News" width="40" height="40" onerror="this.src='/static/placeholder.png'">
+                    <div>
+                        <p class="news-date">2 days ago</p>
+                        <p class="news-title">Price changes: Isak rises, Son falls</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
