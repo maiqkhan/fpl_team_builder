@@ -2,12 +2,12 @@ from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from starlette.middleware.authentication import AuthenticationMiddleware
-from sqlmodel import SQLModel
+from sqlmodel import SQLModel, select, desc
 from contextlib import asynccontextmanager
-
+from datetime import datetime, timezone
 from . import config, shortcuts, backends, database
 from .routers.auth import users
-from .models.analytics import GameweekDeadline
+from .models.analytics import GameweekDeadline, FormPlayers
 from .models.auth import User
 
 settings = config.get_settings()
@@ -20,7 +20,6 @@ async def lifespan(app: FastAPI):
     SQLModel.metadata.create_all(bind=database.engine)
     yield
     # Close the database connection pool
-    await database.engine.dispose()
 
 
 app = FastAPI(lifespan=lifespan)
@@ -36,7 +35,32 @@ def home_page(request: Request, session: database.SessionDep):
     if request.user.is_authenticated:
 
         # Check if the user is authenticated
+        upcoming_deadline = session.exec(
+            select(GameweekDeadline)
+            .where(GameweekDeadline.deadline >= datetime.now(timezone.utc))
+            .order_by(GameweekDeadline.deadline)
+        ).first()
 
-        return shortcuts.render(request, "dashboard.html", {}, status_code=200)
+        deadline_utc = (
+            upcoming_deadline.deadline.isoformat() + "Z" if upcoming_deadline else None
+        )
+
+        form_players = session.exec(
+            select(FormPlayers).order_by(desc(FormPlayers.form)).limit(5)
+        )
+
+        form_player_lst = [dict(player) for player in form_players.fetchall()]
+        print(form_player_lst)
+
+        return shortcuts.render(
+            request,
+            "dashboard.html",
+            {
+                "nextDeadline": deadline_utc,
+                "nextGameweek": upcoming_deadline.gameweek,
+                "form_players": form_player_lst,
+            },
+            status_code=200,
+        )
     else:
         return shortcuts.render(request, "unauth.html", {}, status_code=200)

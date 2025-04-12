@@ -14,7 +14,7 @@
     <div class="dashboard-header">
         <div class="welcome-text">
             <h2>Welcome to the FPL Team Build Tool</h2>
-            <p>Gameweek 12 is approaching. Make sure your team is ready.</p>
+            <p>Gameweek {{ nextGameweek }} is approaching. Make sure your team is ready.</p>
         </div>
         <div class="action-buttons">
             <a href="/build_team" class="btn btn-primary">Build Your Team</a>
@@ -24,10 +24,11 @@
     
     <div class="deadline-timer">
         <div class="timer-info">
-            <h3>Gameweek 12 Deadline</h3>
+            <h3>Gameweek {{ nextGameweek }} Deadline</h3>
             <p>Make your transfers and set your team before the deadline</p>
         </div>
         <div>
+            
             <p class="timer-value">46:23:15</p>
             <p class="timer-label">Hours : Minutes : Seconds</p>
         </div>
@@ -65,30 +66,16 @@
                 <a href="/analytics" class="card-link">View All</a>
             </div>
             <div class="player-list">
+                {% for player in form_players %}
                 <div class="player-item">
-                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p223094.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
+                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p{{ player.picture_id }}.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
                     <div class="player-info">
-                        <p class="player-name">Erling Haaland</p>
-                        <p class="player-team">MCI</p>
+                        <p class="player-name">{{ player.full_name }}</p>
+                        <p class="player-team">{{ player.team }}</p>
                     </div>
-                    <span class="player-points">15 pts</span>
+                    <span class="player-points">{{ player.ownership }} pts</span>
                 </div>
-                <div class="player-item">
-                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p118748.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
-                    <div class="player-info">
-                        <p class="player-name">Mohamed Salah</p>
-                        <p class="player-team">LIV</p>
-                    </div>
-                    <span class="player-points">12 pts</span>
-                </div>
-                <div class="player-item">
-                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p232787.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
-                    <div class="player-info">
-                        <p class="player-name">Cole Palmer</p>
-                        <p class="player-team">CHE</p>
-                    </div>
-                    <span class="player-points">9 pts</span>
-                </div>
+                {% endfor %}                
             </div>
         </div>
         
@@ -126,14 +113,16 @@
 
 <script>
     // Set the target date and time
-    const targetDate = new Date("April 12, 2025 07:31:00").getTime();
+    const targetDate = new Date("{{ nextDeadline  }}").getTime();
 
     // Function to update the countdown timer
     function updateCountdown() {
-        const now = new Date().getTime();
+        const now = Date.now();
+        console.log(now);
         const timeDifference = targetDate - now;
 
         if (timeDifference > 0) {
+            console.log(timeDifference);
             const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
@@ -143,7 +132,8 @@
                 `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         } else {
             // If the countdown is over, display "00:00:00"
-            document.querySelector(".timer-value").textContent = "00:00:00";
+            console.log(timeDifference);
+            document.querySelector(".timer-value").textContent = "The Season is Over";
         }
     }
 
