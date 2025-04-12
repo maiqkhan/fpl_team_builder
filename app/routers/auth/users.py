@@ -11,8 +11,6 @@ settings = config.get_settings()
 
 router = APIRouter(tags=["authentication"])
 
-SessionDep = Annotated[Session, Depends(database.get_session)]
-
 
 class OAuth2PasswordSignupForm(OAuth2PasswordRequestForm):
     def __init__(
@@ -37,7 +35,7 @@ def login_page(request: Request):
 @router.post("/login", response_class=HTMLResponse)
 def login_user(
     request: Request,
-    session: SessionDep,
+    session: database.SessionDep,
     user_credentials: OAuth2PasswordRequestForm = Depends(),
 ):
 
@@ -78,7 +76,7 @@ def signin_page(request: Request):
 @router.post("/signup", response_class=HTMLResponse)
 def register_user(
     request: Request,
-    session: SessionDep,
+    session: database.SessionDep,
     user_credentials: OAuth2PasswordSignupForm = Depends(),
 ):
 
