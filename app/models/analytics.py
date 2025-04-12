@@ -44,3 +44,19 @@ class FormPlayers(SQLModel, table=True):
     price: float = Field(nullable=False)
     ownership: float = Field(nullable=False)
     picture_id: int = Field(nullable=False)
+
+
+class KeyFixtures(SQLModel, table=True):
+    """ "Key fixtures model.
+    This model represents the key fixtures reported in the landing dashboard.
+    """
+
+    __tablename__ = "KEY_FIXTURES"
+    __table_args__ = {"schema": "analytics"}
+
+    fixture_id: int = Field(primary_key=True, nullable=False)
+    home_team: str = Field(nullable=False)
+    home_team_picture_id: int = Field(nullable=False)
+    away_team: str = Field(nullable=False)
+    away_team_picture_id: int = Field(nullable=False)
+    ownership_score: float = Field(nullable=False)
