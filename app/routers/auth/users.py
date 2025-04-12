@@ -5,7 +5,8 @@ from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import ValidationError
 from sqlmodel import Session, select
 
-from ... import shortcuts, config, database, models, oauth2
+from ... import shortcuts, config, database, oauth2
+from ...models import auth as models
 
 settings = config.get_settings()
 

@@ -1,4 +1,4 @@
-from .utils import validate_password
+from ..utils import validate_password
 from passlib.context import CryptContext
 from sqlmodel import Field, SQLModel
 from pydantic import (
