@@ -35,6 +35,26 @@
     </div>
     
     <div class="dashboard-grid">
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Top Performers</h3>
+                <a href="/analytics" class="card-link">View All</a>
+            </div>
+            <div class="player-list">
+                {% for player in form_players %}
+                <div class="player-item">
+                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p{{ player.picture_id }}.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
+                    <div class="player-info">
+                        <p class="player-name">{{ player.full_name }}</p>
+                        <p class="player-team">{{ player.team }}</p>
+                    </div>
+                    <span class="player-points">{{ player.ownership }} pts</span>
+                </div>
+                {% endfor %}                
+            </div>
+        </div>
+        
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Your Team Overview</h3>
@@ -60,53 +80,26 @@
             </div>
         </div>
         
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Top Performers</h3>
-                <a href="/analytics" class="card-link">View All</a>
-            </div>
-            <div class="player-list">
-                {% for player in form_players %}
-                <div class="player-item">
-                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p{{ player.picture_id }}.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
-                    <div class="player-info">
-                        <p class="player-name">{{ player.full_name }}</p>
-                        <p class="player-team">{{ player.team }}</p>
-                    </div>
-                    <span class="player-points">{{ player.ownership }} pts</span>
-                </div>
-                {% endfor %}                
-            </div>
-        </div>
         
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">FPL News & Updates</h3>
-                <a href="#" class="card-link">More News</a>
+                <h3 class="card-title">Impact Fixtures</h3>
             </div>
-            <div class="news-list">
-                <div class="news-item">
-                    <img src="{{ url_for('static', path='news-icon.png') }}" alt="News" width="40" height="40" onerror="this.src='/static/placeholder.png'">
-                    <div>
-                        <p class="news-date">Today</p>
-                        <p class="news-title">Injury update: Kane doubtful for next match</p>
-                    </div>
+            {% for fixture in key_fixtures %}
+            <div class="key-fixture">
+                <div class="team">
+                    <span class="team-name">{{ fixture.home_team }}</span>
+                    <img src="https://resources.premierleague.com/premierleague/badges/70/t{{ fixture.home_team_picture_id }}.png" alt="Team" width="70" height="32" onerror="this.src='/static/placeholder.png'">                
                 </div>
-                <div class="news-item">
-                    <img src="{{ url_for('static', path='news-icon.png') }}" alt="News" width="40" height="40" onerror="this.src='/static/placeholder.png'">
-                    <div>
-                        <p class="news-date">Yesterday</p>
-                        <p class="news-title">Top captain picks for Gameweek 12</p>
-                    </div>
+                <div class="vs-text">
+                    <span>vs</span>
                 </div>
-                <div class="news-item">
-                    <img src="{{ url_for('static', path='news-icon.png') }}" alt="News" width="40" height="40" onerror="this.src='/static/placeholder.png'">
-                    <div>
-                        <p class="news-date">2 days ago</p>
-                        <p class="news-title">Price changes: Isak rises, Son falls</p>
-                    </div>
+                <div class="team">
+                    <img src="https://resources.premierleague.com/premierleague/badges/70/t{{ fixture.away_team_picture_id }}.png" alt="Team" width="70" height="32" onerror="this.src='/static/placeholder.png'">                
+                    <span class="team-name">{{ fixture.away_team }}</span>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -137,6 +130,8 @@
             document.querySelector(".timer-value").textContent = "The Season is Over";
         }
     }
+
+    updateCountdown();
 
     // Update the countdown every second
     setInterval(updateCountdown, 1000);

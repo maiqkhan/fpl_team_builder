@@ -34,7 +34,8 @@ body, html {
 .navbar-links {
     list-style-type: none;
     display: flex;
-    padding-right: 10px;
+    padding-right: 10px;    
+    font-weight: bold;
 }
 
 .navbar-links li {
@@ -627,35 +628,6 @@ tr:hover{
     color: #3E3F5B;
 }
 
-.news-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.news-item {
-    display: flex;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-}
-
-.news-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.news-date {
-    font-size: 0.8rem;
-    color: #666;
-    margin: 0;
-}
-
-.news-title {
-    font-weight: 600;
-    margin: 0.25rem 0;
-}
-
 .deadline-timer {
     display: flex;
     align-items: center;
@@ -699,4 +671,39 @@ tr:hover{
     width: 240px; /* Set a fixed width for consistent alignment */
     text-align: center; /* Center-align the text */
     margin: 0;
+}
+
+.key-fixture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* Add spacing between elements */
+    padding: 0.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem; /* Add white space between fixtures */
+}
+
+.team {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Add spacing between name and image */
+}
+
+.team img {
+    width: 36px;
+    height: 32px;
+}
+
+.team-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #3E3F5B;
+}
+
+.vs-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #6c757d;
 }
