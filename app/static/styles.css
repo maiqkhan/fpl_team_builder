@@ -693,3 +693,10 @@ tr:hover{
     font-size: 0.9rem;
     opacity: 0.8;
 }
+
+.timer-value, .timer-label {
+    display: block; /* Ensures both elements are treated as inline blocks */
+    width: 240px; /* Set a fixed width for consistent alignment */
+    text-align: center; /* Center-align the text */
+    margin: 0;
+}
