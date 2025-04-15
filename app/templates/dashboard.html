@@ -57,33 +57,30 @@
         
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Your Team Overview</h3>
-                <a href="/build_team" class="card-link">Manage Team</a>
+                <h3 class="card-title">Recent Key Price Changes</h3>
             </div>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <p class="stat-value">82</p>
-                    <p class="stat-label">Last GW Points</p>
+            <div class="player-list">
+                {% for price_change in price_changes %}
+                <div class="player-item">
+                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p{{ price_change.picture_id }}.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
+                    <div class="player-info">
+                        <p class="player-name">{{ price_change.player_name }}</p>
+                        <p class="player-team">{{ price_change.player_team }}</p>
+                    </div>
+                    <span class="player-points">£{{ price_change.current_price }} ({% if price_change.price_up_down == "Up" %}
+                        <span style="color: green;">&#9650;</span> <!-- Green up arrow -->
+                    {% elif price_change.price_up_down == "Down" %}
+                        <span style="color: red;">&#9660;</span> <!-- Red down arrow -->
+                    {% endif %} 0.1)</span>
                 </div>
-                <div class="stat-item">
-                    <p class="stat-value">754</p>
-                    <p class="stat-label">Total Points</p>
-                </div>
-                <div class="stat-item">
-                    <p class="stat-value">£2.5M</p>
-                    <p class="stat-label">In The Bank</p>
-                </div>
-                <div class="stat-item">
-                    <p class="stat-value">1</p>
-                    <p class="stat-label">Free Transfers</p>
-                </div>
+                {% endfor %}
             </div>
         </div>
         
         
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Impact Fixtures</h3>
+                <h3 class="card-title">GW{{ nextGameweek }} Impact Fixtures</h3>
             </div>
             {% for fixture in key_fixtures %}
             <div class="key-fixture">

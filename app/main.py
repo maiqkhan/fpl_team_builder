@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from . import config, shortcuts, backends, database
 from .routers.auth import users
-from .models.analytics import GameweekDeadline, FormPlayers, KeyFixtures
+from .models.analytics import GameweekDeadline, FormPlayers, KeyFixtures, PriceChanges
 from .models.auth import User
 
 settings = config.get_settings()
@@ -58,6 +58,14 @@ def home_page(request: Request, session: database.SessionDep):
 
         key_fixture_lst = [dict(fixture) for fixture in key_fixtures.fetchall()]
 
+        price_changes = session.exec(
+            select(PriceChanges).order_by(desc(PriceChanges.price_change_date)).limit(5)
+        )
+
+        price_changes_lst = [
+            dict(price_change) for price_change in price_changes.fetchall()
+        ]
+
         return shortcuts.render(
             request,
             "dashboard.html",
@@ -66,6 +74,7 @@ def home_page(request: Request, session: database.SessionDep):
                 "nextGameweek": upcoming_deadline.gameweek,
                 "form_players": form_player_lst,
                 "key_fixtures": key_fixture_lst,
+                "price_changes": price_changes_lst,
             },
             status_code=200,
         )

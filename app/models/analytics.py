@@ -1,5 +1,5 @@
 from sqlmodel import Field, SQLModel
-from datetime import datetime
+from datetime import datetime, date
 from pydantic import (
     BaseModel,
     EmailStr,
@@ -47,7 +47,7 @@ class FormPlayers(SQLModel, table=True):
 
 
 class KeyFixtures(SQLModel, table=True):
-    """ "Key fixtures model.
+    """Key fixtures model.
     This model represents the key fixtures reported in the landing dashboard.
     """
 
@@ -60,3 +60,20 @@ class KeyFixtures(SQLModel, table=True):
     away_team: str = Field(nullable=False)
     away_team_picture_id: int = Field(nullable=False)
     ownership_score: float = Field(nullable=False)
+
+
+class PriceChanges(SQLModel, table=True):
+    """Price changes model.
+    This model represents the price changes in the analytics schema."""
+
+    __tablename__ = "PRICE_CHANGES"
+    __table_args__ = {"schema": "analytics"}
+
+    player_id: int = Field(primary_key=True, nullable=False)
+    player_name: str = Field(nullable=False)
+    player_position: str = Field(nullable=False)
+    player_team: str = Field(nullable=False)
+    picture_id: int = Field(nullable=False)
+    current_price: float = Field(nullable=False)
+    price_up_down: str = Field(nullable=False)
+    price_change_date: date = Field(nullable=False)
