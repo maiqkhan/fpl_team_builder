@@ -7,6 +7,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from . import config, shortcuts, backends, database
 from .routers.auth import users
+from .routers.analytics import player_stats
 from .models.analytics import GameweekDeadline, FormPlayers, KeyFixtures, PriceChanges
 from .models.auth import User
 
@@ -27,6 +28,7 @@ app = FastAPI(lifespan=lifespan)
 app.add_middleware(AuthenticationMiddleware, backend=backends.JWTCookieBackend())
 app.mount("/static", StaticFiles(directory=str(settings.static_dir)), name="static")
 app.include_router(users.router)
+app.include_router(player_stats.router)
 
 
 @app.get("/")
@@ -50,7 +52,6 @@ def home_page(request: Request, session: database.SessionDep):
         )
 
         form_player_lst = [dict(player) for player in form_players.fetchall()]
-        print(form_player_lst)
 
         key_fixtures = session.exec(
             select(KeyFixtures).order_by(desc(KeyFixtures.ownership_score)).limit(5)
