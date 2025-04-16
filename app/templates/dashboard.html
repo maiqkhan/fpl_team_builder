@@ -2,14 +2,135 @@
 
 {% block links %} 
     <li><a href="/">Home</a></li>
+    <li><a href="/build_team">Build Team</a></li>
+    <li><a href="/analytics">Analytics</a></li>
+    <li><a href="/fixtures">Fixtures</a></li>
     <li><a href="logout">Logout</a></li>
 {% endblock %}
 
 {% block content %}
 
-<div class="table-container">
-    <h1>Welcome to the FPL Team Build Tool</h1>
-
-    <p>You are now logged in.</p>
+<div class="container">
+    <div class="dashboard-header">
+        <div class="welcome-text">
+            <h2>Welcome to the FPL Team Build Tool</h2>
+            <p>Gameweek {{ nextGameweek }} is approaching. Make sure your team is ready.</p>
+        </div>
+        <div class="action-buttons">
+            <a href="/build_team" class="btn btn-primary">Build Your Team</a>
+            <a href="/analytics" class="btn btn-secondary">View Analytics</a>
+        </div>
+    </div>
+    
+    <div class="deadline-timer">
+        <div class="timer-info">
+            <h3>Gameweek {{ nextGameweek }} Deadline</h3>
+            <p>Make your transfers and set your team before the deadline</p>
+        </div>
+        <div>
+            
+            <p class="timer-value"></p>
+            <p class="timer-label">Days : Hours : Minutes : Seconds</p>
+        </div>
+    </div>
+    
+    <div class="dashboard-grid">
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Top Performers</h3>
+                <a href="/analytics" class="card-link">View All</a>
+            </div>
+            <div class="player-list">
+                {% for player in form_players %}
+                <div class="player-item">
+                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p{{ player.picture_id }}.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
+                    <div class="player-info">
+                        <p class="player-name">{{ player.full_name }}</p>
+                        <p class="player-team">{{ player.team }}</p>
+                    </div>
+                    <span class="player-points">{{ player.ownership }} pts</span>
+                </div>
+                {% endfor %}                
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Recent Key Price Changes</h3>
+            </div>
+            <div class="player-list">
+                {% for price_change in price_changes %}
+                <div class="player-item">
+                    <img src="https://resources.premierleague.com/premierleague/photos/players/40x40/p{{ price_change.picture_id }}.png" alt="Player" width="30" height="30" onerror="this.src='/static/placeholder.png'">
+                    <div class="player-info">
+                        <p class="player-name">{{ price_change.player_name }}</p>
+                        <p class="player-team">{{ price_change.player_team }}</p>
+                    </div>
+                    <span class="player-points">£{{ price_change.current_price }} ({% if price_change.price_up_down == "Up" %}
+                        <span style="color: green;">&#9650;</span> <!-- Green up arrow -->
+                    {% elif price_change.price_up_down == "Down" %}
+                        <span style="color: red;">&#9660;</span> <!-- Red down arrow -->
+                    {% endif %} 0.1)</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">GW{{ nextGameweek }} Impact Fixtures</h3>
+            </div>
+            {% for fixture in key_fixtures %}
+            <div class="key-fixture">
+                <div class="team">
+                    <span class="team-name">{{ fixture.home_team }}</span>
+                    <img src="https://resources.premierleague.com/premierleague/badges/70/t{{ fixture.home_team_picture_id }}.png" alt="Team" width="70" height="32" onerror="this.src='/static/placeholder.png'">                
+                </div>
+                <div class="vs-text">
+                    <span>vs</span>
+                </div>
+                <div class="team">
+                    <img src="https://resources.premierleague.com/premierleague/badges/70/t{{ fixture.away_team_picture_id }}.png" alt="Team" width="70" height="32" onerror="this.src='/static/placeholder.png'">                
+                    <span class="team-name">{{ fixture.away_team }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+
+<script>
+    // Set the target date and time
+    const targetDate = new Date("{{ nextDeadline  }}").getTime();
+
+    // Function to update the countdown timer
+    function updateCountdown() {
+        const now = Date.now();
+        console.log(now);
+        const timeDifference = targetDate - now;
+
+        if (timeDifference > 0) {
+            console.log(timeDifference);
+            const days = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));            
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            // Update the timer-value element
+            document.querySelector(".timer-value").textContent = 
+                `${String(days).padStart(2, '0')}:${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        } else {
+            // If the countdown is over, display "00:00:00"
+            console.log(timeDifference);
+            document.querySelector(".timer-value").textContent = "The Season is Over";
+        }
+    }
+
+    updateCountdown();
+
+    // Update the countdown every second
+    setInterval(updateCountdown, 1000);
+</script>
 {% endblock %}

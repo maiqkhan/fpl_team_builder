@@ -5,13 +5,12 @@ from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import ValidationError
 from sqlmodel import Session, select
 
-from ... import shortcuts, config, database, models, oauth2
+from ... import shortcuts, config, database, oauth2
+from ...models import auth as models
 
 settings = config.get_settings()
 
 router = APIRouter(tags=["authentication"])
-
-SessionDep = Annotated[Session, Depends(database.get_session)]
 
 
 class OAuth2PasswordSignupForm(OAuth2PasswordRequestForm):
@@ -37,7 +36,7 @@ def login_page(request: Request):
 @router.post("/login", response_class=HTMLResponse)
 def login_user(
     request: Request,
-    session: SessionDep,
+    session: database.SessionDep,
     user_credentials: OAuth2PasswordRequestForm = Depends(),
 ):
 
@@ -78,7 +77,7 @@ def signin_page(request: Request):
 @router.post("/signup", response_class=HTMLResponse)
 def register_user(
     request: Request,
-    session: SessionDep,
+    session: database.SessionDep,
     user_credentials: OAuth2PasswordSignupForm = Depends(),
 ):
 
