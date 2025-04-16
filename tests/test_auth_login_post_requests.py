@@ -1,9 +1,8 @@
 from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine
 from sqlmodel.pool import StaticPool
-from app.main import app
 from app.models.auth import User
-import json
+from app.main import app
 from app.database import get_session
 import pytest
 
