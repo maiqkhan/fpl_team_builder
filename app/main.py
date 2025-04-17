@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from . import config, shortcuts, backends, database
 from .routers.auth import users
 from .routers.analytics import player_stats
+from .routers.build_tool import build_tool
 from .models.analytics import GameweekDeadline, FormPlayers, KeyFixtures, PriceChanges
 from .models.auth import User
 
@@ -29,6 +30,7 @@ app.add_middleware(AuthenticationMiddleware, backend=backends.JWTCookieBackend()
 app.mount("/static", StaticFiles(directory=str(settings.static_dir)), name="static")
 app.include_router(users.router)
 app.include_router(player_stats.router)
+app.include_router(build_tool.router)
 
 
 @app.get("/")
