@@ -32,7 +32,7 @@ class UserSignup(BaseModel):
 
 class User(SQLModel, table=True):
     __tablename__ = "USERS"
-    #__table_args__ = {"schema": "auth"}
+    __table_args__ = {"schema": "auth"}
 
     user_id: Optional[int] = Field(
         default=None,

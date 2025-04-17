@@ -18,7 +18,7 @@ class GameweekDeadline(SQLModel, table=True):
     """
 
     __tablename__ = "GW_DEADLINE"
-    # __table_args__ = {"schema": "analytics"}
+    __table_args__ = {"schema": "analytics"}
 
     gameweek: int = Field(
         primary_key=True,
@@ -34,7 +34,7 @@ class FormPlayers(SQLModel, table=True):
     """
 
     __tablename__ = "FORM_PLAYERS"
-    # __table_args__ = {"schema": "analytics"}
+    __table_args__ = {"schema": "analytics"}
 
     player_id: int = Field(primary_key=True, nullable=False)
     full_name: str = Field(nullable=False)
@@ -52,7 +52,7 @@ class KeyFixtures(SQLModel, table=True):
     """
 
     __tablename__ = "KEY_FIXTURES"
-    # __table_args__ = {"schema": "analytics"}
+    __table_args__ = {"schema": "analytics"}
 
     fixture_id: int = Field(primary_key=True, nullable=False)
     home_team: str = Field(nullable=False)
@@ -67,7 +67,7 @@ class PriceChanges(SQLModel, table=True):
     This model represents the price changes in the analytics schema."""
 
     __tablename__ = "PRICE_CHANGES"
-    # __table_args__ = {"schema": "analytics"}
+    __table_args__ = {"schema": "analytics"}
 
     player_id: int = Field(primary_key=True, nullable=False)
     player_name: str = Field(nullable=False)
