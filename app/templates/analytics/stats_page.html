@@ -1,1 +1,103 @@
 {% extends "base.html" %}
+
+{% block links %} 
+    <li><a href="/">Home</a></li>
+    <li><a href="/build_tool">Build Team</a></li>
+    <li><a href="logout">Logout</a></li>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="filters">
+    <label for="position-filter">Position:</label>
+    <select id="position-filter">
+        <option value="">All</option>
+        <option value="Goalkeeper">Goalkeeper</option>
+        <option value="Defender">Defender</option>
+        <option value="Midfielder">Midfielder</option>
+        <option value="Forward">Forward</option>
+    </select>
+
+    <label for="team-filter">Team:</label>
+    <select id="team-filter">
+        <option value="">All</option>
+        <option value="Team A">Team A</option>
+        <option value="Team B">Team B</option>
+        <option value="Team C">Team C</option>
+    </select>
+</div>
+
+<div class="table-container">
+<table id="sortable-table">
+    <thead>
+        <tr>
+            <th data-sort="player_name">Player Name</th>
+            <th data-sort="position">Position</th>
+            <th data-sort="team">Team</th>
+            <th data-sort="points">Points</th>
+            <th data-sort="bonus">Bonus</th>
+            <th data-sort="bps">BPS</th>
+            <th data-sort="goals">Goals</th>
+            <th data-sort="assists">Assists</th>
+            <th data-sort="goal_contributions">Goal Contributions</th>
+            <th data-sort="xg">xG</th>
+            <th data-sort="xga">xGA</th>
+            <th data-sort="xgc">xGC</th>
+            <th data-sort="clean_sheets">Clean Sheets</th>
+            <th data-sort="yellow_cards">Yellow Cards</th>
+            <th data-sort="saves">Saves</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Example row -->
+        <tr>
+            <td>Player 1</td>
+            <td>Midfielder</td>
+            <td>Team A</td>
+            <td>100</td>
+            <td>10</td>
+            <td>200</td>
+            <td>5</td>
+            <td>7</td>
+            <td>12</td>
+            <td>3.5</td>
+            <td>2.1</td>
+            <td>1.8</td>
+            <td>8</td>
+            <td>1</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>Player 2</td>
+            <td>Midfielder</td>
+            <td>Team B</td>
+            <td>100</td>
+            <td>10</td>
+            <td>200</td>
+            <td>5</td>
+            <td>7</td>
+            <td>12</td>
+            <td>3.5</td>
+            <td>2.1</td>
+            <td>1.8</td>
+            <td>9</td>
+            <td>1</td>
+            <td>0</td>
+        </tr>
+        <!-- Add more rows dynamically -->
+    </tbody>
+</table>
+</div>
+
+<script src="/static/sortable_table.js"></script>
+
+
+
+{% endblock %}
+
+
+    
+    
+                
+                

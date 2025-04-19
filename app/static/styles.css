@@ -707,3 +707,113 @@ tr:hover{
     font-weight: 600;
     color: #6c757d;
 }
+
+.filters {
+    margin: 1.5rem auto; /* Center the card horizontally */
+    padding: 1rem; /* Add padding inside the card */
+    background-color: #fff; /* White background for the card */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for the card */
+    max-width: 800px; /* Limit the width of the card */
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between; /* Space out the filters */
+}
+
+.filters label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #3E3F5B;
+}
+
+.filters select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #3E3F5B;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filters select:hover {
+    border-color: #3E3F5B;
+    background-color: #f9f9f9;
+}
+
+/* Enhanced styles for the sortable table */
+.table-container {
+    margin: 2rem auto; /* Center the table horizontally and add vertical spacing */
+    padding: 1rem; /* Add padding inside the card */
+    background-color: #fff; /* White background for the card */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for the card */
+    max-width: 1200px; /* Limit the width of the card */
+    overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+}
+
+#sortable-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#sortable-table th, #sortable-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #3E3F5B;
+}
+
+#sortable-table th {
+    cursor: pointer;
+    background-color: #3E3F5B;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
+}
+
+#sortable-table th:hover {
+    background-color: #2d3348;
+}
+
+#sortable-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#sortable-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+#sortable-table td {
+    font-size: 0.9rem;
+    color: #3E3F5B;
+}
+
+/* Add hover effect for table rows */
+#sortable-table tr:hover td {
+    background-color: #f1f1f1;
+    color: #000;
+}
+
+/* Add sorting indicator styles */
+#sortable-table th.asc::after {
+    content: " ▲";
+    font-size: 0.8rem;
+    color: #fff;
+}
+
+#sortable-table th.desc::after {
+    content: " ▼";
+    font-size: 0.8rem;
+    color: #fff;
+}
