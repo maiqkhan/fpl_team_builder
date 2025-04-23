@@ -31,7 +31,7 @@ class UserSignup(BaseModel):
 
 
 class User(SQLModel, table=True):
-    __tablename__ = "USERS"
+    __tablename__ = "users"
     __table_args__ = {"schema": "auth"}
 
     user_id: Optional[int] = Field(
