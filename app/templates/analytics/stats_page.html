@@ -10,22 +10,47 @@
 {% block content %}
 
 <div class="filters">
+    <div>
     <label for="position-filter">Position:</label>
     <select id="position-filter">
-        <option value="">All</option>
+        <option value="All">All</option>
         <option value="Goalkeeper">Goalkeeper</option>
         <option value="Defender">Defender</option>
         <option value="Midfielder">Midfielder</option>
         <option value="Forward">Forward</option>
     </select>
+    </div>
 
+    <div>
     <label for="team-filter">Team:</label>
     <select id="team-filter">
-        <option value="">All</option>
-        <option value="Team A">Team A</option>
-        <option value="Team B">Team B</option>
-        <option value="Team C">Team C</option>
+        <option value="All">All</option>
+        {% for team in teams %}
+            <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
     </select>
+    </div>
+
+    <div>
+        <label for="gameweek-filter">Last X Gameweeks:</label>
+        <select id="gameweek-filter">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+    </div>
+
+    <div>
+        <button id="apply-filters" type="button">Apply Filters</button>
+    </div>
+
 </div>
 
 <div class="table-container">
@@ -50,42 +75,17 @@
         </tr>
     </thead>
     <tbody>
-        <!-- Example row -->
-        <tr>
-            <td>Player 1</td>
-            <td>Midfielder</td>
-            <td>Team A</td>
-            <td>100</td>
-            <td>10</td>
-            <td>200</td>
-            <td>5</td>
-            <td>7</td>
-            <td>12</td>
-            <td>3.5</td>
-            <td>2.1</td>
-            <td>1.8</td>
-            <td>8</td>
-            <td>1</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>Player 2</td>
-            <td>Midfielder</td>
-            <td>Team B</td>
-            <td>100</td>
-            <td>10</td>
-            <td>200</td>
-            <td>5</td>
-            <td>7</td>
-            <td>12</td>
-            <td>3.5</td>
-            <td>2.1</td>
-            <td>1.8</td>
-            <td>9</td>
-            <td>1</td>
-            <td>0</td>
-        </tr>
-        <!-- Add more rows dynamically -->
+        {% for row in player_data %}
+      <tr>
+        {% for col in row %}
+            {% if col is float %}
+                <td>{{ col | round(2) }}</td>
+            {% else %} 
+                <td>{{ col }}</td>
+            {% endif %}
+        {% endfor %}
+      </tr>
+        {% endfor %}
     </tbody>
 </table>
 </div>

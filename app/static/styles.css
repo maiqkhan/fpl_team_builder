@@ -716,6 +716,7 @@ tr:hover{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for the card */
     max-width: 800px; /* Limit the width of the card */
     display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
     align-items: center;
     justify-content: space-between; /* Space out the filters */
@@ -725,9 +726,11 @@ tr:hover{
     font-weight: bold;
     font-size: 1rem;
     color: #3E3F5B;
+    margin-bottom: 0.2rem;
 }
 
 .filters select {
+    width: 100%; 
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -742,6 +745,31 @@ tr:hover{
     border-color: #3E3F5B;
     background-color: #f9f9f9;
 }
+
+/* Group label and dropdown closer together */
+.filters div {
+    flex: 1 1 calc(33.33% - 1rem);
+    display: flex;
+    flex-direction: column; /* Stack label and dropdown vertically */
+    align-items: flex-start; /* Align label and dropdown to the left */
+}
+
+.filters button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #3E3F5B;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.filters button:hover {
+    background-color: #2d3348;
+}
+
 
 /* Enhanced styles for the sortable table */
 .table-container {

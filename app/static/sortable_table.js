@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const tbody = table.querySelector("tbody");
     const positionFilter = document.getElementById("position-filter");
     const teamFilter = document.getElementById("team-filter");
+    const gameweekFilter = document.getElementById("gameweek-filter");
+    const applyFiltersButton = document.getElementById("apply-filters");
 
     // Sort table by column
     headers.forEach((header, index) => {
@@ -39,22 +41,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Filter table by position and team
-    function filterTable() {
+    // Function to apply filters
+    function applyFilters() {
         const positionValue = positionFilter.value.toLowerCase();
         const teamValue = teamFilter.value.toLowerCase();
+        // const gameweekValue = gameweekFilter.value;
 
         Array.from(tbody.querySelectorAll("tr")).forEach(row => {
             const positionText = row.children[1].textContent.toLowerCase();
             const teamText = row.children[2].textContent.toLowerCase();
+            // const gameweekText = row.dataset.gameweek; // Assuming gameweek data is stored in a data attribute
 
-            const matchesPosition = !positionValue || positionText === positionValue;
-            const matchesTeam = !teamValue || teamText === teamValue;
-
-            row.style.display = matchesPosition && matchesTeam ? "" : "none";
+            const matchesPosition = positionValue === "all" || !positionValue || positionText === positionValue;
+            const matchesTeam = teamValue === "all" || !teamValue || teamText === teamValue;
+            //const matchesGameweek = !gameweekValue || parseInt(gameweekText) <= parseInt(gameweekValue);
+            //console.log(gameweekValue, row.dataset.gameweek, matchesGameweek);
+            row.style.display = matchesPosition && matchesTeam ? "" : "none"; // && matchesGameweek 
         });
     }
 
-    positionFilter.addEventListener("change", filterTable);
-    teamFilter.addEventListener("change", filterTable);
+    // Add event listener to the "Apply Filters" button
+    applyFiltersButton.addEventListener("click", applyFilters);
 });
